@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=34S3cur3P@ssW0rd
+    ports:
+      - 5436:1433
+
+  testapp:
+    image: ${DOCKER_REGISTRY-}testapp
+    build:
+      context: .
+      dockerfile: TestApp/Dockerfile
+    depends_on:
+      - db
